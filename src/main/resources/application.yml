@@ -1,0 +1,33 @@
+info:
+    app:
+        name: Currency converter application
+        description: This is application allow you to convert currencies
+        version: 1.0.0
+
+# Hibernate datasource config
+spring:
+    datasource:
+        url: jdbc:h2:mem:currency-converter;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        platform: h2
+        username: sa
+        password:
+
+# JPA configurations
+jpa:
+    show-sql: true
+    hibernate:
+        ddl-auto: create-drop
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        database-platform: H2
+
+# Logging configurations
+logging:
+    level:
+        root: INFO
+        org.springframework.web: INFO
+        org.springframework.security: INFO
+
+rate.service.url: https://openexchangerates.org/api/latest.json?app_id=
+rate.service.url.historical: https://openexchangerates.org/api/historical/{}.json?app_id=
+previous.results.count: 10
+latest.date: 01/01/1999
