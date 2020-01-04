@@ -1,9 +1,4 @@
 pipeline {
-    environment {
-        registry = "isafronenko/capstone"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
-    }
     agent any
 
     stages {
@@ -29,20 +24,28 @@ pipeline {
             }
         }
 
-        /*stage('Sonar Analysis') {
-            steps {
-                sh 'mvn sonar:sonar -DXmx1024m -DXX:MaxPermSize=256m'
+        stage('Building green image') {
+            when {
+                changelog '.*^\\[green_build\\] .+$'
             }
-        }*/
-
-        stage('Building image') {
-
             steps {
                 script {
-                    sh 'docker build -t isafronenko/capstone .'
+                    sh 'docker build -t isafronenko/capstone:green .'
                 }
             }
         }
+
+        stage('Building blue image') {
+            when {
+                changelog '.*^\\[blue_build\\] .+$'
+            }
+            steps {
+                script {
+                    sh 'docker build -t isafronenko/capstone:blue .'
+                }
+            }
+        }
+
         stage('Deploy Image') {
             steps {
                 script {
