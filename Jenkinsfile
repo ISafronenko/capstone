@@ -8,16 +8,19 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
+
         stage('Unit Tests') {
             steps {
                 sh 'mvn test -Punit-tests jacoco:report'
             }
         }
+
         stage('Integration Tests') {
             steps {
                 sh 'mvn test -Pint-tests'
             }
         }
+
         stage('Architectural Tests') {
             steps {
                 sh 'mvn test -Parc-tests'
@@ -26,7 +29,7 @@ pipeline {
 
         stage('Building green image') {
             when {
-                changelog '[green_image]'
+                changelog '[green_build]'
             }
             steps {
                 script {
@@ -37,7 +40,7 @@ pipeline {
 
         stage('Building blue image') {
             when {
-                changelog '[blue_image]'
+                changelog '.*^\\[blue_build\\].*'
             }
             steps {
                 script {
