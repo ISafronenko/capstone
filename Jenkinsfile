@@ -26,7 +26,7 @@ pipeline {
 
         stage('Building green image') {
             when {
-                changelog '.*^\\[green_build\\].*'
+                changelog '[green_build]'
             }
             steps {
                 script {
