@@ -119,6 +119,73 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>unit-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/common/**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/common/**</exclude>
+                                <exclude>**/ratesintegration/**</exclude>
+                                <exclude>**/architectural/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>int-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/ratesintegration/**</include>
+                                <include>**/controller/**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/common/**</exclude>
+                                <exclude>**/ratesintegration/**</exclude>
+                                <exclude>**/architectural/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>arc-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/architectural/**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/common/**</exclude>
+                                <exclude>**/ratesintegration/**</exclude>
+                                <exclude>**/controller/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
