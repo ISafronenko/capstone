@@ -26,7 +26,7 @@ pipeline {
 
         stage('Building green image') {
             when {
-                changelog '[green_build]'
+                changelog '[green_image]'
             }
             steps {
                 script {
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Building blue image') {
             when {
-                changelog '[blue_build]'
+                changelog '[blue_image]'
             }
             steps {
                 script {
