@@ -39,26 +39,21 @@ pipeline {
 
             steps {
                 script {
-                    def dockerHome = tool 'docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    sh 'docker build -t isafronenko/capstone .'
                 }
             }
         }
         stage('Deploy Image') {
             steps {
                 script {
-                    def dockerHome = tool 'docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    docker.withRegistry('https://registry-1.docker.io/v2/', registryCredential) {
-                        dockerImage.push()
-                    }
+                    sh 'docker push isafronenko/capstone'
                 }
             }
         }
+
         stage('Remove Unused docker image') {
             steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi -f isafronenko/capstone"
             }
         }
     }
