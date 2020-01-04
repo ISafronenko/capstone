@@ -1,0 +1,1 @@
+![Jenkins pipeline](/solution/images/jenkins_pipeline.png)
