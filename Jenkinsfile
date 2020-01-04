@@ -26,7 +26,7 @@ pipeline {
 
         stage('Building green image') {
             when {
-                changelog '.*^\\[green_build\\] .+$'
+                changelog '.*^\\[green_build\\].*'
             }
             steps {
                 script {
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Building blue image') {
             when {
-                changelog '.*^\\[blue_build\\] .+$'
+                changelog '.*^\\[blue_build\\].*'
             }
             steps {
                 script {
@@ -60,4 +60,5 @@ pipeline {
             }
         }
     }
+
 }
