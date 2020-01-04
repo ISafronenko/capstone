@@ -50,7 +50,7 @@ pipeline {
                 script {
                     def dockerHome = tool 'docker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    docker.withRegistry('https://hub.docker.com/', registryCredential) {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/isafronenko/', registryCredential) {
                         dockerImage.push()
                     }
                 }
