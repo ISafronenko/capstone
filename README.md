@@ -12,9 +12,6 @@ Here is the list of allowed currencies: EUR, USD, GBP, NZD, AUD, JPY, HUF.
 **Important**
 Due to api limitations all conversions will be done through USD (for example EUR -> NZD will be EUR -> USD -> NZD).
 
-## Current build status
-[![CircleCI](https://circleci.com/gh/ISafronenko/capstone.svg?style=svg)](https://circleci.com/gh/ISafronenko/capstone)
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
