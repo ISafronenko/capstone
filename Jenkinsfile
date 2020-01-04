@@ -35,14 +35,12 @@ pipeline {
             }
         }*/
 
-        stage('Initialize'){
-            def dockerHome = tool 'docker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
-        }
-
         stage('Building image') {
+
             steps {
                 script {
+                    def dockerHome = tool 'docker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
@@ -50,6 +48,8 @@ pipeline {
         stage('Deploy Image') {
             steps {
                 script {
+                    def dockerHome = tool 'docker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     docker.withRegistry('', registryCredential) {
                         dockerImage.push()
                     }
