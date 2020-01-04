@@ -9,3 +9,7 @@ h1 {
 .error-message:first-letter {
     text-transform: capitalize;
 }
+
+body {
+    background-color: aquamarine;
+}

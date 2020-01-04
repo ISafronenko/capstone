@@ -37,7 +37,7 @@ pipeline {
 
         stage('Building blue image') {
             when {
-                changelog '.*^\\[blue_build\\].*'
+                changelog '[blue_build]'
             }
             steps {
                 script {
