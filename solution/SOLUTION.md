@@ -2,6 +2,8 @@
 
 ## Scope of the Project
 ### Architecture of the project
+Capstone project architecture is presented on following diagram:
+![Architecture](/solution/images/capstone_eks_architecture.png)
 
 ### Technical stack
 For Capstone project I've used the following technical stack:
