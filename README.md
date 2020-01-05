@@ -1,5 +1,12 @@
-# capstone
-This repository contains code for udacity cloud devops nanodegree capstone project
+# Ievgen Safronenko Cloud DevOps Engineer Nanodegree Program Capstone Project
+This repository contains code for udacity cloud devops nanodegree capstone project.
+
+## Architecture of the project
+Capstone project architecture is presented on following diagram:
+![Architecture](/solution/images/capstone_eks_architecture.png)
+
+All the details regarding architecture, technical stack, pipelines configuration are presented in [Solution part](solution/SOLUTION.md)
+Here presented application description and instructions for getting started.
 
 ## Currency Converter application
 This repository contains currency converter application.
@@ -9,92 +16,41 @@ This protected currency converter application using a public currency converter 
 After the successful login the application can show the last 10 queries and their results on the main screen as reminder.
 Here is the list of allowed currencies: EUR, USD, GBP, NZD, AUD, JPY, HUF.
 
-**Important**
-Due to api limitations all conversions will be done through USD (for example EUR -> NZD will be EUR -> USD -> NZD).
+## Prerequisites
 
-## Getting Started
+In order to get started with the project you need to have:
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-See deployment for notes on how to deploy the project on a live system.
+* __Accounts__
+  * AWS Account. You can create one [here:](https://aws.amazon.com/account/)
 
-### Prerequisites
+* __Software__
+  * Git to checkout project from GitHub. Installation guide is [here:](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  * AWS CLI. Installation guide is [here:](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+  * minikube to run docker image on local kubernetes cluster (optional) Installation guide is [here:](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+  * kubectl to manage local / EKS cluster from console. Installation guide is [here:](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-Before running currency converter on your local environment you need to have:
+## Get started
 
+* Checkout project `git clone https://github.com/ISafronenko/capstone.git`
+* From cloudformation/eks-infrastructure run `./create_eks_cluster.sh`
+* If everything works correctly you will get stack id like:
 ```
-Install JDK 1.8 or later (https://java.com/en/download/)
-Install Maven (https://maven.apache.org/install.html)
+{
+    "StackId": "arn:aws:cloudformation:us-west-2:744578843414:stack/capstone-stack/e5281ed0-2ffb-11ea-8181-02e60452d3a4"
+}
 ```
+* After cluster get deployed (usually takes 10-15 minutes) you need to authorize kubectl to work with EKS Cluster deployed to AWS.
+  * run `aws eks --region us-west-2 update-kubeconfig --name capstone_eks_cluster`
+  * Go to IAM/Roles and copy arn role id for ConfigMap script in aws-auth-cm.yaml
+  * run `./auth_eks.sh` 
+* Test kubectl with EKS cluster by running: `kubectl get nodes --watch`. If everything is correct you should get list with nodes ready to use.
 
-You can verify you installation of *Java*:
-
-```
-$ java -version
-java version "1.8.0_102"
-Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
-Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)
-```
-and *Maven*:
-
-```
-$ mvn -v
-Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-10T16:41:47+00:00)
-Maven home: /usr/local/Cellar/maven/3.3.9/libexec
-Java version: 1.8.0_102, vendor: Oracle Corporation
-```
-### Configuration
-***Data sources***
-Application using in-memory data base H2 so no additional configurations is needed.
-
-***Open Exchange Rates Api key***
-
-For integration with https://openexchangerates.org/ you need to provide api key.
-For security reason api key shouldn't appear in public github repository.
-That's why you need to create env variable openexchangerates_key and assign correct api key to it.
-You can register your own account at https://openexchangerates.org/ and get api key.
-
-For **Unix** system:
-To set it for current **shell and all processes started from current shell**:
-
-```
-export openexchangerates_key="3fd31199ac5b4..."
-```
-
-For **Windows**
-For windows env you can add env variable using this tutorials: https://www.java.com/en/download/help/path.xml
-
-### Running
-
-**Important** Before running please check your environment variables and add openexchangerates_key as was mentioned before.
-To get an application running on development env:
-
-Via Maven spring-boot plugin:
-
-```
-mvn spring-boot:run
-```
-
-Or from command line:
-
-```
-mvn package
-java -jar target/currency-converter-0.0.1-SNAPSHOT.jar
-```
-
-After successfull start:
-```
-Started CurrencyConverterApplication in 16.209 seconds (JVM running for 17.156)
-```
-you can use application via url http://localhost:8080/ 
-
-## Running the tests
-
-Testing covered by integration tests using MockMvc and architectural structure using Archunit.
-To run tests execute standard maven goal:
-```
-mvn clean test
-```
 ## Deployment
+
+## Update stack
+In order to update stack run: `./update_eks_cluster.sh`
+## Delete stack
+In order to delete stack run: `./update_eks_cluster.sh`
 
 ## Monitoring and health checking
 Here are some of the most common endpoints Spring Boot provides out of the box:
@@ -109,18 +65,5 @@ Please check:
 * http://localhost:8080/swagger-ui.html on local host
 * https://curren.herokuapp.com/swagger-ui.html on internet
 
-## Built With
-
-* [Spring Boot](http://start.spring.io/) - The Spring Boot Framework (Spring MVC, Spring Security, Spring Data)
-* [Maven](https://maven.apache.org/) - Dependency Management
-* CI/CD
-* Hosting
-* [Git](https://git-scm.com/downloads) - Version control
-
-## Versioning
-
-This project is using Git for version controlling.
-
 ## Authors
-
 * **Ievgen Safronenko** - [Linkedin](https://www.linkedin.com/in/ievgen-safronenko-0ba21144/)
