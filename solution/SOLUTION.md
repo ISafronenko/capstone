@@ -15,6 +15,15 @@ For Capstone project I've used the following technical stack:
 * Container orchestrator - Kubernetes.
 * Cloud provider: AWS (EC2, CloudFormation, EKS).
 
+### How it works
+Project code stored in VCS - Git (GitHub). After a commit with specific commit message Jenkins (CI/CD) triggers a build
+which consist of compiling project, running different kind of tests (unit/integration etc), 
+building and pushing docker image to container registry.
+
+Infrastructure created as IAAS with cloudformation. This results in Kuberntes cluster being deployed to AWS.
+After cluster up and running devops engineer can deploy docker image from registry to the cluster using 
+blue/green strategy (described in the last section).
+
 ## Jenkins pipeline builds for blue/green deployment
 Jenkins master box was created as separate EC2 t2.xlarge instance with all necessary tools installed:
 
@@ -56,7 +65,7 @@ __Jenkins Unit tests detailed__
 __Jenkins box tagged images__
 ![Jenkins Box tagged images](/solution/images/jenkins_box_tagged_images.png)
 
-##Docker registry
+## Docker registry
 As a result of Jenkins build we have two different docker images in docker registry:
 * isafronenko/capstone:blue
 * isafronenko/capstone:green
@@ -72,14 +81,15 @@ Infrastructure for Capstone project was created as cloudformation script which d
 to deploy kubernetes cluster on __Amazon EKS__.
 
 An __Amazon EKS cluster__ consists of two primary components:
-  - The Amazon EKS control plane
-  - Amazon EKS worker nodes that are registered with the control plan
+* The Amazon EKS control plane
+* Amazon EKS worker nodes that are registered with the control plan
 
 __Cluster configuration__
-1. Two public subnets for two AZs
-2. Cluster: min size - 2, max size - 4 EC2 instances of type t2.medium with 20 Gb storage attached
-
-__Some details:__
+* Cluster: min size - 2, desired size - 3, max size - 4 EC2 instances of type t2.medium with 20 Gb storage attached.
+* VPC with two public subnets for two availability zones.
+* Internet Gateway with attachment, routing tables and security groups for routing traffic to/from the internet.
+* Roles for running service and nodes.
+* AutoScalingGroup and LaunchConfiguration for provisioning EC2 instances.
 
 ### Screenshots of AWS EKS cluster creation
 __Create EKS Cluster from ZSH__
@@ -89,7 +99,7 @@ __EKS Cluster creation in progress__
 ![EKS Cluster creation in progress](/solution/images/eks_stack_creation_in_porgress.png)
 
 __EKS Cluster created__
-![EKS Cluster created](/solution/images/eks_stack_created.png) eks_cluster_active
+![EKS Cluster created](/solution/images/eks_stack_created.png)
 
 __EKS Cluster is active__
 ![EKS Cluster is active](/solution/images/eks_cluster_active.png) 
