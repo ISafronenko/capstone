@@ -219,12 +219,14 @@ Resources:
         - Ref: NodeInstanceRole
 
   #Security group of workers node
+  #The worker node is not tagged as being owned by the cluster.
+  #Your worker nodes must have the following tag applied to them, where <cluster_name> is replaced with the name of your cluster.
   NodeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Security group common to all worker nodes in EKS cluster
       Tags:
-        - Key: !Sub ${ClusterName}
+        - Key: !Sub kubernetes.io/cluster/${ClusterName}
           Value: owned
       VpcId: !Ref VPC
 
@@ -332,6 +334,8 @@ Resources:
 
   #Defines an Amazon EC2 Auto Scaling group with the specified name and attributes.
   #To configure Amazon EC2 instances launched as part of the group, you can specify a launch template or a launch configuration.
+  #The worker node is not tagged as being owned by the cluster.
+  #Your worker nodes must have the following tag applied to them, where <cluster_name> is replaced with the name of your cluster.
   NodeAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -343,7 +347,7 @@ Resources:
         - Key: Name
           PropagateAtLaunch: "true"
           Value: !Sub ${ClusterName}-${NodeGroupName}-Node
-        - Key: !Sub ${ClusterName}
+        - Key: !Sub kubernetes.io/cluster/${ClusterName}
           PropagateAtLaunch: "true"
           Value: owned
       VPCZoneIdentifier:

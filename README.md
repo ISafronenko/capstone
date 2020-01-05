@@ -6,6 +6,7 @@ Capstone project architecture is presented on following diagram:
 ![Architecture](/solution/images/capstone_eks_architecture.png)
 
 All the details regarding architecture, technical stack, pipelines configuration are presented in [Solution part](solution/SOLUTION.md)
+
 Here presented application description and instructions for getting started.
 
 ## Currency Converter application
@@ -21,13 +22,13 @@ Here is the list of allowed currencies: EUR, USD, GBP, NZD, AUD, JPY, HUF.
 In order to get started with the project you need to have:
 
 * __Accounts__
-  * AWS Account. You can create one [here:](https://aws.amazon.com/account/)
+  * AWS Account. You can create one [here](https://aws.amazon.com/account/)
 
 * __Software__
-  * Git to checkout project from GitHub. Installation guide is [here:](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  * AWS CLI. Installation guide is [here:](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-  * minikube to run docker image on local kubernetes cluster (optional) Installation guide is [here:](https://kubernetes.io/docs/tasks/tools/install-minikube/)
-  * kubectl to manage local / EKS cluster from console. Installation guide is [here:](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+  * Git to checkout project from GitHub. Installation guide is [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  * AWS CLI. Installation guide is [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+  * minikube to run docker image on local kubernetes cluster (optional) Installation guide is [here](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+  * kubectl to manage local / EKS cluster from console. Installation guide is [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 ## Get started
 
@@ -39,11 +40,16 @@ In order to get started with the project you need to have:
     "StackId": "arn:aws:cloudformation:us-west-2:744578843414:stack/capstone-stack/e5281ed0-2ffb-11ea-8181-02e60452d3a4"
 }
 ```
-* After cluster get deployed (usually takes 10-15 minutes) you need to authorize kubectl to work with EKS Cluster deployed to AWS.
+* After cluster gets deployed (usually takes 10-15 minutes) you need to authorize kubectl to work with EKS Cluster deployed to AWS.
   * run `aws eks --region us-west-2 update-kubeconfig --name capstone_eks_cluster`
-  * Go to IAM/Roles and copy arn role id for ConfigMap script in aws-auth-cm.yaml
+  * Go to IAM/Roles and copy arn role id (Capstone-Role) for ConfigMap script in aws-auth-cm.yaml. For example `arn:aws:iam::744578843414:role/Capstone-Role`
   * run `./auth_eks.sh` 
-* Test kubectl with EKS cluster by running: `kubectl get nodes --watch`. If everything is correct you should get list with nodes ready to use.
+* Test kubectl with EKS cluster by running: `kubectl cluster-info`. If everything is correct you should get output like this:
+
+```Kubernetes master is running at https://64686BAE07E45A8453FFFF698E390BC8.yl4.us-west-2.eks.amazonaws.com
+   CoreDNS is running at https://64686BAE07E45A8453FFFF698E390BC8.yl4.us-west-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+   To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
 
 ## Deployment
 
@@ -64,6 +70,9 @@ All exposed endpoints are documented via Swagger.
 Please check: 
 * http://localhost:8080/swagger-ui.html on local host
 * https://curren.herokuapp.com/swagger-ui.html on internet
+
+## Amazon EKS Troubleshooting
+Good Amazon EKS Troubleshooting guide provided [here](https://docs.aws.amazon.com/eks/latest/userguide/troubleshooting.html)
 
 ## Authors
 * **Ievgen Safronenko** - [Linkedin](https://www.linkedin.com/in/ievgen-safronenko-0ba21144/)
