@@ -1,1 +1,100 @@
-![Jenkins pipeline](/solution/images/jenkins_pipeline.png)
+# Ievgen Safronenko Cloud DevOps Engineer Nanodegree Program Capstone Project
+
+## Scope of the Project
+### Architecture of the project
+
+### Technical stack
+For Capstone project I've used the following technical stack:
+
+* Project source code repository - GitHub.
+* Project CI/CD - Jenkins.
+* Containers - Docker.
+* Container registry - DockerHub.
+* Application: Java 8, SpringBoot, Maven.
+* IAAS - cloudformation.
+* Container orchestrator - Kubernetes.
+* Cloud provider: AWS (EC2, CloudFormation, EKS).
+
+## Jenkins pipeline builds for blue/green deployment
+Jenkins master box was created as separate EC2 t2.xlarge instance with all necessary tools installed:
+
+* Maven plugin for building the project
+* JDK plugin for building java application
+* Docker plugin for building images and push them to docker hub.
+* Blue Ocean plugin for improving Jenkins UX. 
+
+Jenkins pipeline specified in Jenkins file and consists of following stages:
+* Build - building java SpringBoot application
+* Unit test - running JUnit tests 
+* Integration tests - running integration tests (for example MockMvc)
+* Architectural tests - running Archunit tests to check structural correctness of the java code
+* Two stages for build __blue/green__ docker images (depends on commit messages). Depends on stage we are tagging image
+with different tags - blue or green.
+* Deploy image - pushing blue or green image to docker hub.
+* Remove unused image - stage for cleaning Jenkins master box.
+
+### Screenshots of Jenkins pipeline setup and testing
+
+__Jenkins EC2 Instance__
+![Jenkins EC2 Instance](/solution/images/jenkins_ec2.png)
+
+__Jenkins Pipeline__
+![Jenkins Pipeline](/solution/images/jenkins_pipeline.png)
+
+__Jenkins building Blue image__
+![Jenkins Blue Image](/solution/images/jenkins_building_blue_image_pipeline.png)
+
+__Jenkins building Blue image detailed__
+![Jenkins Blue Image detailed](/solution/images/jenkins_building_blue_image.png)
+
+__Jenkins building Green image__
+![Jenkins building Green image](/solution/images/jenkins_building_green_image_pipeline.png)
+
+__Jenkins Unit tests detailed__
+![Jenkins Unit tests detailed](/solution/images/jenkins_unit_tests.png)
+
+__Jenkins box tagged images__
+![Jenkins Box tagged images](/solution/images/jenkins_box_tagged_images.png)
+
+##Docker registry
+As a result of Jenkins build we have two different docker images in docker registry:
+* isafronenko/capstone:blue
+* isafronenko/capstone:green
+
+__Docker registry__
+![Docker hub registry main](/solution/images/docker_gub_registry_main.png)
+
+__Docker registry detailed__
+![Docker registry detailed](/solution/images/docker_hub_registry.png)
+
+## AWS Kubernetes as a Service
+Infrastructure for Capstone project was created as cloudformation script which describes all necessary components 
+to deploy kubernetes cluster on __Amazon EKS__.
+
+An __Amazon EKS cluster__ consists of two primary components:
+  - The Amazon EKS control plane
+  - Amazon EKS worker nodes that are registered with the control plan
+
+__Cluster configuration__
+1. Two public subnets for two AZs
+2. Cluster: min size - 2, max size - 4 EC2 instances of type t2.medium with 20 Gb storage attached
+
+__Some details:__
+
+### Screenshots of AWS EKS cluster creation
+__Create EKS Cluster from ZSH__
+![Create EKS Cluster from ZSH](/solution/images/create_eks_cluster.png) 
+
+__EKS Cluster creation in progress__
+![EKS Cluster creation in progress](/solution/images/eks_stack_creation_in_porgress.png)
+
+__EKS Cluster created__
+![EKS Cluster created](/solution/images/eks_stack_created.png) eks_cluster_active
+
+__EKS Cluster is active__
+![EKS Cluster is active](/solution/images/eks_cluster_active.png) 
+
+__EKS Cluster events__
+![EKS Cluster events](/solution/images/eks_cluster_events.png) 
+
+## Blue/Green deployment with Kubernetes
