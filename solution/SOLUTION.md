@@ -103,6 +103,9 @@ __EKS Cluster creation in progress__
 __EKS Cluster created__
 ![EKS Cluster created](/solution/images/eks_stack_created.png)
 
+__EKS Cluster nodes__
+![EKS Cluster nodes](/solution/images/eks_cluster_nodes.png)
+
 __EKS Cluster is active__
 ![EKS Cluster is active](/solution/images/eks_cluster_active.png) 
 
