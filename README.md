@@ -71,8 +71,11 @@ Please check:
 * http://localhost:8080/swagger-ui.html on local host
 * https://curren.herokuapp.com/swagger-ui.html on internet
 
-## Amazon EKS Troubleshooting
-Good Amazon EKS Troubleshooting guide provided [here](https://docs.aws.amazon.com/eks/latest/userguide/troubleshooting.html)
+## Links
+* [Amazon Web Services - Labs](https://github.com/awslabs) - useful materials for creating EKS infrastructure on AWS.
+* [Amazon EKS Troubleshooting](https://docs.aws.amazon.com/eks/latest/userguide/troubleshooting.html) - Good Amazon EKS Troubleshooting guide provided 
+* [BlueGreen Deployments](https://martinfowler.com/bliki/BlueGreenDeployment.html) - Blue/Green deployment by Martin Fowler
+* [Blue/Green Deployments on Kubernetes](https://www.ianlewis.org/en/bluegreen-deployments-kubernetes) - kubernetes tutorial by Ian Lewis
 
-## Authors
+## Author
 * **Ievgen Safronenko** - [Linkedin](https://www.linkedin.com/in/ievgen-safronenko-0ba21144/)
