@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: capstone-deployment
+  labels:
+    app: green-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: green-deployment
+  template:
+    metadata:
+      labels:
+        app: green-deployment
+    spec:
+      containers:
+        - name: green
+          image: isafronenko/capstone:green
+          ports:
+            - containerPort: 8080

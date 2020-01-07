@@ -113,3 +113,26 @@ __EKS Cluster events__
 ![EKS Cluster events](/solution/images/eks_cluster_events.png) 
 
 ## Blue/Green deployment with Kubernetes
+Kubernetes doesn't have support for blue/green deployments built in. 
+Currently the best way to do it is create a new deployment and then update the service for the application to point to the new deployment.
+
+A Kubernetes __deployment__ specifies a group of instances of an application.
+Behind the scenes it creates a __replicaset__ which is responsible for keeping the specified number of instances up and running.
+
+__Replicaset__
+![Replicaset](/solution/images/replicas.png)
+
+We can create "blue" deployment by running `kubectl apply -f blue.yml` from deployment folder.
+![Blue deployment](/solution/images/blue.png)
+
+The same way we can create a "green" deployment: `kubectl apply -f green.yml`
+![Green deployment](/solution/images/green.png)
+
+Once we have a deployment we can provide a way to access the instances of the deployment by creating a Service.
+Services are decoupled from deployments so that means that you don't explicitly point a service at a deployment. 
+Instead we specify a label selector which is used to list the pods that make up the service.
+When using deployments, this is typically set up so that it matches the pods for a deployment.
+
+To create a __Service__ we need to run `kubectl apply -f service.yml` with selector version which points to green deployment.
+
+To implement __blue/green__ deployment we need to update __selector__ version to __blue__
