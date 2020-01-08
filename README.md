@@ -9,6 +9,14 @@ All the details regarding architecture, technical stack, pipelines configuration
 
 Here presented application description and instructions for getting started.
 
+## Skills required
+* Working in AWS
+* Using Jenkins to implement Continuous Integration and Continuous Deployment
+* Building pipelines
+* Working with Ansible and CloudFormation to deploy clusters
+* Building Kubernetes clusters
+* Building Docker containers in pipelines
+
 ## Currency Converter application
 This repository contains currency converter application.
 This protected currency converter application using a public currency converter API https://openexchangerates.org/signup/free,
