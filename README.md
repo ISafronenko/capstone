@@ -52,6 +52,23 @@ In order to get started with the project you need to have:
 ```
 
 ## Deployment
+When cluster is up and running we can proceed with deployments:
+* Create a deployment for application version __blue__:
+`kubectl apply -f blue.yml`
+* Create a deployment for application version __green__:
+`kubectl apply -f green.yml`
+* Create a service and associate it with one of the application versions:
+`kubectl apply -f service.yml`
+* In order to switch traffic from __blue__ to __green_ update service __selector__ from __app=blue-deployment__ to  __app=green-deployment__ and run again:  
+`kubectl apply -f service.yml`
+
+__Application green deployment__
+![Application green deployment](/solution/images/green-currency.png)
+
+__Application blue deployment__
+![Application blue deployment](/solution/images/blue-currency.png)
+
+__All details__ are presented in [Solution part](solution/SOLUTION.md).
 
 ## Update stack
 In order to update stack run: `./update_eks_cluster.sh`
@@ -69,7 +86,7 @@ Here are some of the most common endpoints Spring Boot provides out of the box:
 All exposed endpoints are documented via Swagger.
 Please check: 
 * http://localhost:8080/swagger-ui.html on local host
-* https://curren.herokuapp.com/swagger-ui.html on internet
+* https://<DNS>/swagger-ui.html on internet
 
 ## Links
 * [Amazon Web Services - Labs](https://github.com/awslabs) - useful materials for creating EKS infrastructure on AWS.
