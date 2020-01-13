@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.10.RELEASE</version>
+        <version>2.2.2.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -25,7 +25,7 @@
         <java.version>1.8</java.version>
         <bootstrap.version>3.3.7</bootstrap.version>
         <jquery.version>3.2.1</jquery.version>
-        <swagger.version>2.6.1</swagger.version>
+        <swagger.version>2.9.2</swagger.version>
         <h2.version>1.4.196</h2.version>
         <archunit.version>0.4.0</archunit.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>

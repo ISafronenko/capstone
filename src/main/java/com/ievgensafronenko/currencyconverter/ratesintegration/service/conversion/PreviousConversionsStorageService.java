@@ -37,7 +37,7 @@ public class PreviousConversionsStorageService {
         String userEmail = userService.loggedUserEmail();
         log.debug("Getting previous conversions data for user email: {}", userEmail);
 
-        Pageable tenResults = new PageRequest(0, size);
+        Pageable tenResults = PageRequest.of(0, size);
         List<PreviousConversions> resultList = repository.findAllByUserEmailOrderByDateOfRequestDesc(userEmail, tenResults);
 
         if (resultList == null || resultList.size() == 0) {
